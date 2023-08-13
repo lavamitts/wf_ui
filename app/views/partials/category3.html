@@ -1,0 +1,19 @@
+<div class="govuk-panel govuk-panel--confirmation">
+    <h1 class="govuk-panel__title">
+    Code {{ data.goods_nomenclature_item_id | trim_significant }} may be used.
+  </h1>
+    <div class="govuk-panel__body">
+    You may use the H8 declaration with a <strong>6-digit code</strong> to move
+    products belonging to subheading {{ data.goods_nomenclature_item_id | trim_significant }}
+    {% if trade_context.geographical_area_id != "1011" %}
+    from {{ trade_context.geographical_area_description }}
+    {% endif %}
+    to Northern Ireland.
+    </div>
+</div>
+
+<h2 class="govuk-heading-m">What's next?</h2>
+<ul class="govuk-list govuk-list--bullet">
+    <li><a href="/subheadings/{{ data.goods_nomenclature_item_id | trim_significant }}">Try again</a></li>
+    <li><a href="">Find out more</a></li>
+</ul>

@@ -1,0 +1,54 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Subheading " + trade_context.goods_nomenclature_item_id | trim_significant %}
+{% if context.geographical_area_id is not null %}
+  {% set pageName = pageName + " from " + trade_context.geographical_area_description %}
+{% endif %}
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+
+      <h1 class="govuk-heading-xl">
+        Subheading {{ data.goods_nomenclature_item_id | trim_significant }}
+      </h1>
+
+      <div class="govuk-inset-text">
+        <b>{{ data.description }}</b>
+      </p>
+    </div>
+    {% include "partials/details.html" %}
+
+    {# <h2 class="govuk-heading-s">Can I use this subheading on a declaration?</h2> #}
+
+    {% if data.geography_matters %}
+      {% include "partials/select_geography.html" %}
+    {% else %}
+      {% if trade_context.decision is not null %}
+        {% if trade_context.decision == 3 %}
+          {% include "partials/category3.html" %}
+        {% elseif trade_context.decision == 2 %}
+          {% include "partials/category2.html" %}
+        {% elseif trade_context.decision == 1 %}
+          {% include "partials/category1.html" %}
+        {% endif %}
+      {% else %}
+        {% if questions | length > 0 %}
+          {% if trade_context.arguments | length == questions | length %}
+            {% include "partials/category3.html" %}
+          {% else %}
+            {% include "partials/questions.html" %}
+          {% endif %}
+        {% else %}
+          {% include "partials/category3.html" %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+
+{% include "partials/ott_link.html" %}
+
+  </div>
+</div>
+
+
+{% endblock %}

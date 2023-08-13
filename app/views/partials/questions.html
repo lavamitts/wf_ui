@@ -1,0 +1,44 @@
+{# {{ context.completed_questions | dump }} #}
+
+{% set question_shown = false %}
+<form action="/form_handler" method="post">
+    {% for question in questions %}
+        {% if question_shown == false %}
+            {% set control_name = "question_" + question.measure_type_id + "_" + question.document_code %}
+            {% if control_name not in context.completed_questions %}
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">
+                            {{ question.question }}
+                        </h1>
+                    </legend>
+                    {% if question.hint != "" %}
+                        <div class="govuk-hint">
+                            {{ question.hint | convert_markdown | safe }}
+                        </div>
+                    {% endif %}
+                    {# <div class="govuk-hint">
+                        {{ question.document_code }} / {{ question.measure_type_id }}
+                    </div> #}
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="{{ control_name }}_yes" name="{{ control_name }}" type="radio" value="yes">
+                            <label class="govuk-label govuk-radios__label" for="{{ control_name }}_yes">Yes</label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="{{ control_name }}_no" name="{{ control_name }}" type="radio" value="no">
+                            <label class="govuk-label govuk-radios__label" for="{{ control_name }}_no">No</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            {% set question_shown = true %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    <input type="hidden" value="{{ data["goods_nomenclature_item_id"] }}" name="goods_nomenclature_item_id" id="goods_nomenclature_item_id">
+    <input type="hidden" name="screen" id="screen" value="questions">
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+</form>

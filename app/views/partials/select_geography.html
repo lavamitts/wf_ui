@@ -1,0 +1,30 @@
+<form action="/form_handler" method="post">
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <h1 class="govuk-fieldset__heading">
+                Where does your consignment originate?
+            </h1>
+            </legend>
+            <div id="sign-in-hint" class="govuk-hint">
+            You may be able to use this subheading on an H8 declaration.
+            To determine if this is possible, you need to let us know where the consignment originates.
+        </div>
+            <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="geographical_area_id_GB" name="geographical_area_id" type="radio" value="GB">
+                    <label class="govuk-label govuk-radios__label" for="geographical_area_id_GB">England, Scotland or Wales</label>
+                </div>
+                {% for option in data["geography_options"] %}
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="geographical_area_id_{{ option.description }}" name="geographical_area_id" type="radio" value="{{ option.geographical_area_id }}">
+                        <label class="govuk-label govuk-radios__label" for="geographical_area_id_{{ option.description }}">{{ option.description }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </fieldset>
+    </div>
+    <input type="hidden" value="{{ data["goods_nomenclature_item_id"] }}" name="goods_nomenclature_item_id" id="goods_nomenclature_item_id">
+    <input type="hidden" name="screen" id="screen" value="select_geography">
+    <button class="govuk-button" data-module="govuk-button">Continue</button>
+</form>
