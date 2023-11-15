@@ -2,7 +2,7 @@
 
 ## Examples
 
-### 41140 - Chamois leather
+### 411410 - Chamois leather
 
 Shows difference between UA and GB
 
